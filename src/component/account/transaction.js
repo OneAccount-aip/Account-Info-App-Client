@@ -1,287 +1,25 @@
 import styled from "styled-components";
 import Header from "../common/header";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 const Transaction = () => {
-    const transactionList = {
-        "api_tran_id": "fc9d78a6-31a1-4da4-a8bb-8692f4c0dab9",
-        "rsp_code": "A0000",
-        "rsp_message": "",
-        "api_tran_dtm": "20230303170434858",
-        "bank_tran_id": "M202300139U193502266",
-        "bank_tran_date": "20190101",
-        "bank_code_tran": "097",
-        "bank_rsp_code": "000",
-        "bank_rsp_message": "",
-        "fintech_use_num": "120230013988951092411029",
-        "balance_amt": 5000000,
-        "page_record_cnt": 25,
-        "next_page_yn": "Y",
-        "befor_inquiry_trace_info": "",
-        "bank_name": "KB국민은행",
-        "savings_bank_name": "",
-        "res_list": [
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            },
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈상여금",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            },
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈상여금",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            },
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈상여금",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            },
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈상여금",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            },
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈상여금",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            },
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈상여금",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            },
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈상여금",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            },
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈상여금",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            },
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈상여금",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            },
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈상여금",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            },
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈상여금",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            },
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈상여금",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            },
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈상여금",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            },
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈상여금",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            },
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈상여금",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            },
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈상여금",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            },
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈상여금",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            },
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈상여금",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            },
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈상여금",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            },
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈상여금",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            },
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈상여금",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            },
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈상여금",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            },
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈상여금",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            },
-            {
-                "tran_date": "20190101",
-                "tran_time": "010101",
-                "inout_type": "입금",
-                "tran_type": "급여",
-                "print_content": "오픈상여금",
-                "tran_amt": 1000000,
-                "after_balance_amt": "5000000",
-                "branch_name": "분당점"
-            }
-        ]
-    }
+
+    useEffect(()=>{
+        getTransactionList()
+    })
+    const {state} = useLocation();
+    const [transactionList, setTransactionList] = useState([])
     const date = (str) => {
         let month, day
         str[4] === '0' ? month = str.slice(5, 6) : month = str.slice(4, 6)
         str[6] === '0' ? day = str.slice(7, 8) : day = str.slice(6, 8)
-        return month + "월 " + day + "일"
+        return str.slice(0,4) + "년" + month + "월 " + day + "일"
     }
     const navigate = useNavigate()
 
-    const depositButtonListener=()=>{
+    const depositButtonListener = () => {
         navigate("/deposit")
     }
 
@@ -290,17 +28,38 @@ const Transaction = () => {
         const minute = str.slice(4, 6)
         return time + ":" + minute
     }
+
+    const toMoney = (num) => {
+        if (num)
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        return num
+    }
+
+    const getTransactionList = () => {
+        const httpRequest = {
+            method : "GET",
+            url:`/transaction/account/transaction_list?fintech_use_num=${state.fintech_use_num}&from_date=20230101&to_date=20230301`,
+            headers: {
+                Authorization: localStorage.getItem("Authorization")
+            }
+        }
+        axios(httpRequest)
+            .then((res)=>{
+                setTransactionList(res.data.res_list)
+            })
+    }
+
     return (
         <div>
             <Header/>
             <Root>
-                <Account>토스뱅크 3987-92873-4071-034</Account>
-                <Balance>500,000,000원</Balance>
+                <Account>{state.bank_name} {state.account_num_masked}</Account>
+                <Balance>{toMoney(state.balance)}원</Balance>
                 <DepositButton>채우기</DepositButton>
                 <TransButton onClick={depositButtonListener}>보내기</TransButton>
             </Root>
             <Root>
-                {transactionList.res_list.map((t, index) => {
+                {transactionList.map((t, index) => {
                     return (
                         <div key={index}>
                             <Date>{date(t.tran_date)}</Date>
@@ -389,7 +148,7 @@ const Description = styled.p`
 `
 
 const Time = styled.p`
-    font-size: 0.7rem;
+  font-size: 0.7rem;
   opacity: 70%;
 `
 
