@@ -7,6 +7,8 @@ import DepositPage from "./page/depositPage";
 import UserInfoPage from "./page/userInfoPage";
 import Index from "./page";
 import MyPage from "./page/myPage";
+import RedirectPage from "./page/redirectPage";
+import AuthPage from "./page/authPage";
 
 function App() {
     return (
@@ -19,7 +21,9 @@ function App() {
                     <Route path="/trans" element={<Transaction/>}/>
                     <Route path="/deposit" element={<DepositPage/>}/>
                     <Route path="/info" element={<UserInfoPage/>}/>
+                    <Route path="/authPage" element={<AuthPage/>}/>
                     <Route path="/mypage" element={<MyPage/>}/>
+                    <Route path="/auth/callback" element={<RedirectPage/>}/>
                 </Routes>
             </Div>
         </BrowserRouter>
