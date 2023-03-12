@@ -1,4 +1,4 @@
-import Header from "../component/common/header";
+import Header from "../../component/common/header";
 import {useNavigate} from "react-router-dom";
 import styled from "styled-components";
 
@@ -6,12 +6,12 @@ const AuthPage = () => {
     const navigate = useNavigate();
     const authHandleClick = () => {
         let tmpWindow = window.open("about:blank")
-        const clientId = "2d720bca-aaea-46b6-9943-274bb39a5f8a"
-        const redirect_uri = "http://localhost:3000/auth/callback"
-        const scope = "login inquiry transfer"
-        const state = "b80BLsfigm9OokPTjy03elbJqRHOfGSY"
-        const auth_type = 0
-        tmpWindow.location.href = `https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirect_uri}&scope=${scope}&state=${state}&auth_type=${auth_type}`
+        const clientId = process.env.REACT_APP_CLIENTID
+        const redirect_uri = process.env.REACT_APP_REDIRECT_URI
+        const scope = process.env.REACT_APP_SCOPE
+        const state = process.env.REACT_APP_STATE
+        const auth_type = process.env.REACT_APP_AUTH_TYPE
+        tmpWindow.location.href = `${process.env.REACT_APP_TEST_API_URL}?response_type=code&client_id=${clientId}&redirect_uri=${redirect_uri}&scope=${scope}&state=${state}&auth_type=${auth_type}`
     };
 
     const logoutHandleClick = () => {

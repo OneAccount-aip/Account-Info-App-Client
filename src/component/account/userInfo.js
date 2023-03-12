@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useEffect, useState} from "react";
 
-const UserInfo = () => {
+const UserInfo = ({accountClickListener, depositClickListener}) => {
 
     useEffect(() => {
         getUserInfo()
@@ -29,12 +29,6 @@ const UserInfo = () => {
         else
             url = "https://lh3.googleusercontent.com/8PydoWI_sr5TI5zC2hl6H13-iRpad3wvX2zAEoEzzboOZBWkAd-YwmCiCCfzF3816A"
         return url
-    }
-    const accountClickListener = (e) => {
-        navigate("/trans", {state: e});
-    }
-    const depositClickListener = (e) => {
-        navigate("/deposit", {state: e})
     }
 
     const getUserInfo = async () => {
@@ -78,11 +72,11 @@ const UserInfo = () => {
                 return (
                     <CardBlock key={index}>
                         <Image src={setBankIcon(i.bank_name)}/>
-                        <Card onClick={(clk) => accountClickListener(i)}>
+                        <Card onClick={() => accountClickListener(i)}>
                             <AccountName>{i.account_alias}</AccountName>
                             <Balance>{toMoney(i.balance)}원</Balance>
                         </Card>
-                        <DepositButton onClick={(clk) => depositClickListener(i)}>송금</DepositButton>
+                        <DepositButton onClick={() => depositClickListener(i)}>송금</DepositButton>
                     </CardBlock>
                 )
             }

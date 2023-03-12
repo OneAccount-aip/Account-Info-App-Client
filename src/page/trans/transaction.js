@@ -1,26 +1,37 @@
 import styled from "styled-components";
-import Header from "../common/header";
+import Header from "../../component/common/header";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import Footer from "../../component/common/footer";
 
 const Transaction = () => {
 
-    useEffect(()=>{
+    useEffect(() => {
         getTransactionList()
-    })
+    }, [])
+
     const {state} = useLocation();
-    const [transactionList, setTransactionList] = useState([])
+    const [transactionList, setTransactionList] = useState([{
+        tran_date: "",
+        inout_type: "",
+        tran_amt: "",
+        tran_time: "",
+    }])
     const date = (str) => {
         let month, day
         str[4] === '0' ? month = str.slice(5, 6) : month = str.slice(4, 6)
         str[6] === '0' ? day = str.slice(7, 8) : day = str.slice(6, 8)
-        return str.slice(0,4) + "년" + month + "월 " + day + "일"
+        return str.slice(0, 4) + "년" + month + "월 " + day + "일"
     }
     const navigate = useNavigate()
 
     const depositButtonListener = () => {
-        navigate("/deposit")
+        const depositData = {
+            bank_name: state.bank_name,
+            account_num_masked: state.account_num_masked
+                }
+        navigate("/send", {state:depositData})
     }
 
     const time = (str) => {
@@ -37,15 +48,16 @@ const Transaction = () => {
 
     const getTransactionList = () => {
         const httpRequest = {
-            method : "GET",
-            url:`/transaction/account/transaction_list?fintech_use_num=${state.fintech_use_num}&from_date=20230101&to_date=20230301`,
+            method: "GET",
+            url: `/transaction/account/transaction_list?fintech_use_num=${state.fintech_use_num}&from_date=20230101&to_date=20230301`,
             headers: {
                 Authorization: localStorage.getItem("Authorization")
             }
         }
         axios(httpRequest)
-            .then((res)=>{
+            .then((res) => {
                 setTransactionList(res.data.res_list)
+                console.log(res)
             })
     }
 
@@ -69,11 +81,12 @@ const Transaction = () => {
                                         src={"https://lh3.googleusercontent.com/8PydoWI_sr5TI5zC2hl6H13-iRpad3wvX2zAEoEzzboOZBWkAd-YwmCiCCfzF3816A"}/>
                                 </Card>
                                 <Card>
-                                    <Description>{t.inout_type}</Description>
+                                    <Description>{t.print_content}</Description>
                                     <Time>{time(t.tran_time)}</Time>
                                 </Card>
                                 <BalanceCard>
-                                    <Amount>+{t.tran_amt}원</Amount>
+                                    {t.inout_type === "입금" ? <RedAmount>+ {toMoney(t.tran_amt)}원</RedAmount> :
+                                        <BlueAmount>- {toMoney(t.tran_amt)}원</BlueAmount>}
                                     <TotalBalance>{t.after_balance_amt}원</TotalBalance>
                                 </BalanceCard>
                             </CardBlock>
@@ -81,6 +94,7 @@ const Transaction = () => {
                     )
                 })}
             </Root>
+            <Footer/>
         </div>
     )
 }
@@ -165,9 +179,15 @@ const Account = styled.p`
   text-decoration: underline;
 `
 
-const Amount = styled.p`
+const BlueAmount = styled.p`
   font-size: 1.2rem;
   color: dodgerblue;
+  font-weight: bold;
+`
+
+const RedAmount = styled.p`
+  font-size: 1.2rem;
+  color: orangered;
   font-weight: bold;
 `
 

@@ -1,4 +1,4 @@
-import Header from "../component/common/header";
+import Header from "../../component/common/header";
 import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
@@ -30,7 +30,7 @@ const Index = () => {
         axios(httpRequest)
             .then((res) => {
                 if (res.data === true)
-                    navigate("/info")
+                    navigate("/accountInfo")
                 else
                     navigate("/authPage")
             })
@@ -56,7 +56,7 @@ const AuthButton = styled.button`
   margin: auto;
   width: 300px;
   height: 40px;
-  background: dodgerblue;
+  background: black;
   color: white;
   border: none;
 `;
