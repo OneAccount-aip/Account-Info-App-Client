@@ -51,5 +51,5 @@
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.3.0"
   },
-  "proxy": "http://localhost:8080"
+  "proxy": "https://port-0-account-info-app-server-6g2llf5d1j9b.sel3.cloudtype.app/"
 }
