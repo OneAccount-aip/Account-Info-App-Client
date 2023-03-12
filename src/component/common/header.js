@@ -8,7 +8,7 @@ const Header = () => {
     }
 
     const notificationClickListener=()=>{
-        navigate("/mypage")
+        navigate("/notification")
     }
     return (
         <Div>
