@@ -2,13 +2,16 @@ import styled from "styled-components";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Signup from "./page/auth/signup";
 import Signin from "./page/auth/signin";
-import Transaction from "./component/account/transaction";
-import DepositPage from "./page/depositPage";
-import UserInfoPage from "./page/userInfoPage";
-import Index from "./page";
-import MyPage from "./page/myPage";
-import RedirectPage from "./page/redirectPage";
-import AuthPage from "./page/authPage";
+import Transaction from "./page/trans/transaction";
+import SendPage from "./page/main/sendPage";
+import UserInfoPage from "./page/main/userInfoPage";
+import Index from "./page/main";
+import MyPage from "./page/main/myPage";
+import RedirectPage from "./page/user/redirectPage";
+import AuthPage from "./page/user/authPage";
+import DepositPage from "./page/trans/depositPage";
+import InfoPage from "./page/main/infoPage";
+import NotificationPage from "./page/user/notificationPage";
 
 function App() {
     return (
@@ -19,10 +22,13 @@ function App() {
                     <Route path="/signin" element={<Signin/>}/>
                     <Route path="/signup" element={<Signup/>}/>
                     <Route path="/trans" element={<Transaction/>}/>
+                    <Route path="/send" element={<SendPage/>}/>
                     <Route path="/deposit" element={<DepositPage/>}/>
-                    <Route path="/info" element={<UserInfoPage/>}/>
+                    <Route path="/accountInfo" element={<UserInfoPage/>}/>
                     <Route path="/authPage" element={<AuthPage/>}/>
                     <Route path="/mypage" element={<MyPage/>}/>
+                    <Route path="/notification" element={<NotificationPage/>}/>
+                    <Route path="/info" element={<InfoPage/>}/>
                     <Route path="/auth/callback" element={<RedirectPage/>}/>
                 </Routes>
             </Div>
@@ -34,5 +40,6 @@ const Div = styled.div`
   background-color: #161619;
   min-height: 100vh;
   color: white;
+  padding-bottom: 20px;
 `
 export default App;
