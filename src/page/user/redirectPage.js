@@ -20,6 +20,7 @@ const RedirectPage = () => {
     const [depositToken, setDepositToken] = useState()
     const [refreshToken, setRefreshToken] = useState()
     const [userSeqNo, setUserSeqNo] = useState()
+    const [clientUseCode, setClientUseCode] = useState()
 
     const get3LeggedToken = () => {
         const httpRequest = {
@@ -46,6 +47,7 @@ const RedirectPage = () => {
         axios(httpRequest)
             .then((res) => {
                 setDepositToken(prev => res.data?.access_token || prev)
+                setClientUseCode(res.data.clientUseCode)
                 console.log(res)
             })
             .catch((err) => {
@@ -63,7 +65,9 @@ const RedirectPage = () => {
             data: {
                 cntrToken: cntrToken,
                 refreshToken: refreshToken,
-                depositToken: depositToken
+                depositToken: depositToken,
+                userSeqNo: userSeqNo,
+                clientUseCode: clientUseCode
             }
         }
         console.log(httpRequest)
