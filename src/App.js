@@ -7,7 +7,6 @@ import SendPage from "./page/main/sendPage";
 import UserInfoPage from "./page/main/userInfoPage";
 import Index from "./page/main";
 import MyPage from "./page/main/myPage";
-import RedirectPage from "./page/user/redirectPage";
 import AuthPage from "./page/user/authPage";
 import DepositPage from "./page/trans/depositPage";
 import InfoPage from "./page/main/infoPage";
@@ -29,7 +28,6 @@ function App() {
                     <Route path="/mypage" element={<MyPage/>}/>
                     <Route path="/notification" element={<NotificationPage/>}/>
                     <Route path="/info" element={<InfoPage/>}/>
-                    <Route path="/auth/callback" element={<RedirectPage/>}/>
                 </Routes>
             </Div>
         </BrowserRouter>
