@@ -11,7 +11,7 @@ const AuthPage = () => {
             checkIsRedirected()
             get2LeggedToken()
             get3LeggedToken()
-        },
+        },[]
         )
 
     const navigate = useNavigate();
@@ -54,7 +54,7 @@ const AuthPage = () => {
             axios(httpRequest)
                 .then((res) => {
                     setDepositToken(prev => res.data?.access_token || prev)
-                    setClientUseCode(res.data.clientUseCode)
+                    setClientUseCode(res.data.client_use_code)
                     console.log(res)
                 })
                 .catch((err) => {
