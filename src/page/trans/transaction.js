@@ -49,7 +49,7 @@ const Transaction = () => {
     const getTransactionList = () => {
         const httpRequest = {
             method: "GET",
-            url: `/transaction/account/transaction_list?fintech_use_num=${state.fintech_use_num}&from_date=20230101&to_date=20230301`,
+            url: `${process.env.REACT_APP_PROXY}/transaction/account/transaction_list?fintech_use_num=${state.fintech_use_num}&from_date=20230101&to_date=20230301`,
             headers: {
                 Authorization: localStorage.getItem("Authorization")
             }

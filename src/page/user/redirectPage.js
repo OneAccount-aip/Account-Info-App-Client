@@ -24,7 +24,7 @@ const RedirectPage = () => {
     const get3LeggedToken = () => {
         const httpRequest = {
             method: "POST",
-            url: `/auth/callback?code=${authCode}`,
+            url: `${process.env.REACT_APP_PROXY}/auth/callback?code=${authCode}`,
         }
         axios(httpRequest)
             .then((res) => {
@@ -41,7 +41,7 @@ const RedirectPage = () => {
     const get2LeggedToken = () => {
         const httpRequest = {
             method: "POST",
-            url: `/auth/`,
+            url: `${process.env.REACT_APP_PROXY}/auth/`,
         }
         axios(httpRequest)
             .then((res) => {
@@ -56,7 +56,7 @@ const RedirectPage = () => {
     const setInfo = () => {
         const httpRequest = {
             method: "POST",
-            url: "/auth/token",
+            url: `${process.env.REACT_APP_PROXY}/auth/token`,
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("Authorization")}`
             },

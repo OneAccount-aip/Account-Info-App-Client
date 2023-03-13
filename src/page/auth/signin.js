@@ -14,7 +14,7 @@ const Signin = () => {
     const signinClickListener=()=>{
         const request = {
             method : "POST",
-            url : "/login",
+            url : `${process.env.REACT_APP_PROXY}/login`,
             data : {
                 username : username,
                 password : password,

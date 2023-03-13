@@ -22,7 +22,7 @@ const Index = () => {
     const checkCertified = () => {
         const httpRequest = {
             method: "GET",
-            url: "/check",
+            url: `${process.env.REACT_APP_PROXY}/check`,
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("Authorization")}`
             }

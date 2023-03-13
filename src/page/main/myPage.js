@@ -25,7 +25,7 @@ const MyPage = () => {
     const getUserInfo=()=>{
         const httpRequest = {
             method : "GET",
-            url : "/user",
+            url : `${process.env.REACT_APP_PROXY}/user`,
             headers : {
                 Authorization: `Bearer ${localStorage.getItem("Authorization")}`
             }

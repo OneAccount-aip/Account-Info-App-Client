@@ -34,7 +34,7 @@ const UserInfo = ({accountClickListener, depositClickListener}) => {
     const getUserInfo = async () => {
         const httpRequest = {
             method: "GET",
-            url: "/user/me",
+            url: `${process.env.REACT_APP_PROXY}/user/me`,
             headers: {
                 Authorization: localStorage.getItem("Authorization")
             }
@@ -52,7 +52,7 @@ const UserInfo = ({accountClickListener, depositClickListener}) => {
     const getAccountBalance = async (fintechUseNum) => {
         const httpRequest = {
             method: "GET",
-            url: `/transaction/account?fintech_use_num=${fintechUseNum}`,
+            url: `${process.env.REACT_APP_PROXY}/transaction/account?fintech_use_num=${fintechUseNum}`,
             headers: {
                 Authorization: localStorage.getItem("Authorization")
             }
