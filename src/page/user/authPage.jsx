@@ -68,7 +68,7 @@ const AuthPage = () => {
             method: "POST",
             url: `${process.env.REACT_APP_PROXY}/auth/token`,
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("Authorization")}`
+                Authorization: localStorage.getItem("Authorization")
             },
             data: {
                 cntrToken: cntrToken,
