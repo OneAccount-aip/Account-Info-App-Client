@@ -7,13 +7,6 @@ import axios from "axios";
 
 const AuthPage = () => {
 
-    useEffect(() => {
-            checkIsRedirected()
-            get2LeggedToken()
-            get3LeggedToken()
-        },[]
-        )
-
     const navigate = useNavigate();
     const location = useLocation()
     const qCode = useLocation().search;
@@ -26,41 +19,49 @@ const AuthPage = () => {
     const [userSeqNo, setUserSeqNo] = useState()
     const [clientUseCode, setClientUseCode] = useState()
 
-    const get3LeggedToken = () => {
-        if (redirected) {
-            const httpRequest = {
-                method: "POST",
-                url: `${process.env.REACT_APP_PROXY}/auth/callback?code=${authCode}`,
-            }
-            axios(httpRequest)
-                .then((res) => {
-                    setCntrToken(res.data.access_token)
-                    setRefreshToken(res.data.refresh_token)
-                    setUserSeqNo((res.data.user_seq_no))
-                    console.log(res)
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
+    useEffect(() => {
+        checkIsRedirected()
+    },[])
+
+    const checkIsRedirected = () => {
+        if (location.search[0] === '?') {
+            setRedirected(true)
+            get3LeggedToken()
+            get2LeggedToken()
         }
     }
 
-    const get2LeggedToken = () => {
-        if (redirected) {
-            const httpRequest = {
-                method: "POST",
-                url: `${process.env.REACT_APP_PROXY}/auth/`,
-            }
-            axios(httpRequest)
-                .then((res) => {
-                    setDepositToken(prev => res.data?.access_token || prev)
-                    setClientUseCode(res.data.client_use_code)
-                    console.log(res)
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
+    const get3LeggedToken = () => {
+        const httpRequest = {
+            method: "POST",
+            url: `${process.env.REACT_APP_PROXY}/auth/callback?code=${authCode}`,
         }
+        axios(httpRequest)
+            .then((res) => {
+                setCntrToken(res.data.access_token)
+                setRefreshToken(res.data.refresh_token)
+                setUserSeqNo((res.data.user_seq_no))
+                console.log(res)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
+    const get2LeggedToken = () => {
+        const httpRequest = {
+            method: "POST",
+            url: `${process.env.REACT_APP_PROXY}/auth/`,
+        }
+        axios(httpRequest)
+            .then((res) => {
+                setDepositToken(prev => res.data?.access_token || prev)
+                setClientUseCode(res.data.client_use_code)
+                console.log(res)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }
 
     const setInfo = () => {
@@ -98,11 +99,6 @@ const AuthPage = () => {
         tmpWindow.location.href = `${process.env.REACT_APP_TEST_API_URL}?response_type=code&client_id=${clientId}&redirect_uri=${redirect_uri}&scope=${scope}&state=${state}&auth_type=${auth_type}`
     };
 
-    const checkIsRedirected = () => {
-        if (location.search[0]==='?')
-            setRedirected(true)
-    }
-
     const logoutHandleClick = () => {
         localStorage.clear()
         window.alert("로그아웃 되었습니다")
@@ -114,19 +110,19 @@ const AuthPage = () => {
     return (
         <div>
             <Header/>
-                {redirected ?
-                    <Root>
-                        <Text>정보를 등록 후 서비스를 이용하세요</Text>
-                        <SubmitButton onClick={setInfo}>등록</SubmitButton>
-                    </Root>
-                    :
-                    <Root>
-                        <P>계좌 인증 후 이용하실 수 있습니다.</P>
-                        <AuthButton onClick={authHandleClick}>인증하러가기</AuthButton>
-                        <LogoutButton onClick={logoutHandleClick}>로그아웃</LogoutButton>
-                        <PageButton onClick={pageHandleClick}>홈페이지가기</PageButton>
-                    </Root>
-                }
+            {redirected ?
+                <Root>
+                    <Text>정보를 등록 후 서비스를 이용하세요</Text>
+                    <SubmitButton onClick={setInfo}>등록</SubmitButton>
+                </Root>
+                :
+                <Root>
+                    <P>계좌 인증 후 이용하실 수 있습니다.</P>
+                    <AuthButton onClick={authHandleClick}>인증하러가기</AuthButton>
+                    <LogoutButton onClick={logoutHandleClick}>로그아웃</LogoutButton>
+                    <PageButton onClick={pageHandleClick}>홈페이지가기</PageButton>
+                </Root>
+            }
         </div>
     )
 }
