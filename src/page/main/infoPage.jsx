@@ -24,7 +24,7 @@ const InfoPage = () => {
             description: "내 수입모아보기",
         }, {
             name: "앱 설정",
-            description: "내 수입 모아보기",
+            description: "앱 설정 보기",
         }
     ];
     const infoClickListener = (e) => {
@@ -51,6 +51,7 @@ const InfoPage = () => {
             case 5:
                 navigate("/accountInfo")
                 break
+            default:
         }
     }
     return (
@@ -86,12 +87,6 @@ const Card = styled.div`
   flex-direction: column;
   margin-top: 20px;
   padding-left: 20px;
-`
-const Img = styled.img`
-  width: 20px;
-  height: 20px;
-  justify-content: right;
-  filter: invert(80);
 `
 
 const Name = styled.p`

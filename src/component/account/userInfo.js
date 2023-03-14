@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useEffect, useState} from "react";
 
@@ -9,7 +8,6 @@ const UserInfo = ({accountClickListener, depositClickListener}) => {
         getUserInfo()
     }, [])
 
-    const navigate = useNavigate()
     const [userInfo, setUserInfo] = useState([]);
 
     const setBankIcon = (name) => {
