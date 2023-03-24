@@ -3,13 +3,13 @@ import styled from "styled-components";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import Footer from "../../component/common/footer";
+import axios from "axios";
 
-const DepositPage = () => {
+const TransferPage = () => {
 
-    const navigate = useNavigate()
     const {state} = useLocation();
     const [amount, setAmount] = useState("금액을 입력해 주세요")
-
+    const navigate = useNavigate()
     const inputAmount = (e) => {
         const {value} = e.target;
         setAmount(value);
@@ -26,18 +26,37 @@ const DepositPage = () => {
     const depositClickListener = () => {
         if (state.fromBank === "" || state.fromAccount === "") {
             window.alert("보내는 은행 선택")
-        } else {
-            console.log(state)
-            window.alert(`${state.fromBank} 계좌로 ${amount}원을 송금했습니다`)
-            navigate("/accountInfo")
+        } else if (amount <= 0) {
+            window.alert("금액을 입력해 주세요")
+        }else {
+            const httpRequest = {
+                method : "POST",
+                url : `${process.env.REACT_APP_PROXY}/transaction/transfer`,
+                data : {
+                    fromFinNum : state.fromFinNum,
+                    toAccount :state.toAccount,
+                    amount :amount,
+                    content : "앱송금"
+                }
+            }
+            axios(httpRequest)
+                .then((res)=>{
+                    console.log(res)
+                    window.alert(`${state.fromBank} 계좌로 ${amount}원을 송금했습니다`)
+                    navigate("/accountInfo")
+                })
+                .catch((err)=>{
+                    console.log(err)
+                })
         }
     }
 
+    console.log(state, amount)
     return (
         <div>
             <Header/>
             <From>{state.fromBank} {state.fromAccount}에서</From>
-            <Text>{state.toBank} {state.toAccount}로</Text>
+            <Text>{state.toUser}님의 계좌 {state.toAccount}로</Text>
             <InputAccount>
                 <Input onChange={inputAmount} type="number" placeholder={amount}/>
                 <Amount>{toMoney(amount)}</Amount>
@@ -49,7 +68,7 @@ const DepositPage = () => {
         </div>
     )
 }
-export default DepositPage;
+export default TransferPage;
 
 const Amount = styled.p`
   margin: 15px;

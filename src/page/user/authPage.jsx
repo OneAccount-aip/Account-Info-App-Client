@@ -21,6 +21,7 @@ const AuthPage = () => {
 
     useEffect(() => {
         checkIsRedirected()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     const checkIsRedirected = () => {

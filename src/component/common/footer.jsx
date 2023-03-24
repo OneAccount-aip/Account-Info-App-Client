@@ -50,7 +50,7 @@ const Div = styled.div`
   bottom: 0;
   height: 70px;
   width: 100%;
-  background-color: #161619;
+  background-color: #19173D;
 `
 const ButtonBlock = styled.div`
   display: flex;
@@ -65,7 +65,7 @@ const Img = styled.img`
 const NavButton = styled.button`
   color: white;
   border-style: none;
-  background-color: #161619;
+  background-color: #19173D;
   margin-bottom: 15px;
 `
 export default Footer;

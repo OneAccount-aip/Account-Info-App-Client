@@ -12,6 +12,7 @@ const MyPage = () => {
     useEffect(()=>{
         checkAuth();
         getUserInfo();
+        // eslint-disable-next-line
     },[])
 
     const [user, setUser] = useState({
