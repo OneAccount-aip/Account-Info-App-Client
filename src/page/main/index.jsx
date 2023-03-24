@@ -8,6 +8,7 @@ const Index = () => {
 
     useEffect(() => {
         checkAuth();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     const location = useLocation()
@@ -17,7 +18,8 @@ const Index = () => {
         const token = localStorage.getItem("Authorization")
         if (!token)
             navigate("/signin")
-        checkCertified()
+        else
+            checkCertified()
     }
 
     const checkCertified = () => {

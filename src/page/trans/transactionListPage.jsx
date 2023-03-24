@@ -5,13 +5,16 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import Footer from "../../component/common/footer";
 
-const Transaction = () => {
+const TransactionListPage = () => {
 
     useEffect(() => {
         getTransactionList()
-    }, [])
+        getDbTransactionList()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
 
     const {state} = useLocation();
+    const [accountNumber, setAccountNumber] = useState("")
     const [transactionList, setTransactionList] = useState([{
         tran_date: "",
         inout_type: "",
@@ -29,7 +32,9 @@ const Transaction = () => {
     const depositButtonListener = () => {
         const depositData = {
             bank_name: state.bank_name,
-            account_num_masked: state.account_num_masked
+            account_num_masked: accountNumber,
+            fintech_use_num: state.fintech_use_num,
+            fromAccount: state.account_num_masked
                 }
         navigate("/send", {state:depositData})
     }
@@ -54,10 +59,48 @@ const Transaction = () => {
                 Authorization: localStorage.getItem("Authorization")
             }
         }
+        // console.log(httpRequest)
         axios(httpRequest)
             .then((res) => {
                 setTransactionList(res.data.res_list)
-                console.log(res)
+                getAccountNumber(res.data.fintech_use_num)
+                console.log(res.data.res_list)
+            })
+    }
+
+    const getDbTransactionList = () => {
+        const httpRequest = {
+            method: "GET",
+            url: `${process.env.REACT_APP_PROXY}/transaction/user?num=${state.fintech_use_num}`,
+            headers: {
+                Authorization: localStorage.getItem("Authorization")
+            }
+        }
+            axios(httpRequest)
+            .then((res)=>{
+                console.log(res.data)
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+    }
+
+    const getAccountNumber = (finNum) => {
+        const httpRequest = {
+            method: "GET",
+            url: `${process.env.REACT_APP_PROXY}/finNum?num=${finNum}`,
+            headers: {
+                Authorization: localStorage.getItem("Authorization")
+            }
+        }
+        // console.log(httpRequest)
+        axios(httpRequest)
+            .then((res)=>{
+                setAccountNumber(res.data.accountNum)
+                // console.log("setAccountNumber", res.data)
+            })
+            .catch((err)=>{
+                // console.log("err", err)
             })
     }
 
@@ -65,10 +108,13 @@ const Transaction = () => {
         <div>
             <Header/>
             <Root>
-                <Account>{state.bank_name} {state.account_num_masked}</Account>
+                <Account>{state.bank_name} {accountNumber}</Account>
                 <Balance>{toMoney(state.balance)}원</Balance>
-                <DepositButton>채우기</DepositButton>
-                <TransButton onClick={depositButtonListener}>보내기</TransButton>
+                <ButtonBlock>
+                    <DepositButton>채우기</DepositButton>
+                    <TransButton onClick={depositButtonListener}>보내기</TransButton>
+                </ButtonBlock>
+
             </Root>
             <Root>
                 {transactionList.map((t, index) => {
@@ -78,7 +124,7 @@ const Transaction = () => {
                             <CardBlock>
                                 <Card>
                                     <Image
-                                        src={"https://lh3.googleusercontent.com/8PydoWI_sr5TI5zC2hl6H13-iRpad3wvX2zAEoEzzboOZBWkAd-YwmCiCCfzF3816A"}/>
+                                        src={"https://cdn-icons-png.flaticon.com/512/10128/10128727.png"}/>
                                 </Card>
                                 <Card>
                                     <Description>{t.print_content}</Description>
@@ -98,12 +144,18 @@ const Transaction = () => {
         </div>
     )
 }
-export default Transaction;
+export default TransactionListPage;
 
 const Date = styled.p`
   font-size: 0.8rem;
 `
 
+const ButtonBlock = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: auto;
+`
 const DepositButton = styled.button`
   width: 150px;
   height: 40px;
@@ -125,7 +177,7 @@ const TransButton = styled.button`
 `
 
 const Root = styled.div`
-  background-color: #232328;
+  background-color: #262450;
   margin: 15px;
   padding: 15px;
   border-radius: 20px;
@@ -139,7 +191,7 @@ const CardBlock = styled.div`
 `
 
 const Card = styled.div`
-  padding-left: 20px;
+  padding-left: 10px;
   display: flex;
   flex-direction: column;
 `
