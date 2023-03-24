@@ -1,8 +1,15 @@
 {
-  "name": "MyBank",
-  "short_name": "MyBank",
-  "start_url": ".",
+  "name": "OneAccount",
+  "short_name": "OA",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/10128/10128727.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
   "display": "standalone",
-  "background_color": "#161619",
-  "theme_color": "#161619"
+  "background_color": "#19173D",
+  "theme_color": "#19173D"
 }

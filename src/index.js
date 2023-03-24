@@ -5,6 +5,17 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./serviceWorker.js')
+            .then(registration => {
+                console.log('DONE_', registration)
+            })
+            .catch(e => {
+                console.log('SW registration failed: ', e)
+            })
+    })
+}// load 가 끝나면 워커를 등록해줌.
 root.render(
     <App />
 );
