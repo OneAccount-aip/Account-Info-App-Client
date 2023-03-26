@@ -1,7 +1,7 @@
 import Header from "../../component/common/header";
 import styled from "styled-components";
 import UserInfo from "../../component/account/userInfo";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import Footer from "../../component/common/footer";
 import axios from "axios";
@@ -9,10 +9,16 @@ import axios from "axios";
 const SendPage = () => {
 
     const navigate = useNavigate()
-    const[accountNum, setAccountNum] = useState("계좌번호 입력")
-    const[accountBank, setAccountBank] = useState("은행 선택")
-    const[searchAccount, setSearchAccount] = useState([])
+    const [fromAccountNum, setFromAccountNum] = useState("")
+    const [toAccountNum, setToAccountNum] = useState("계좌번호 입력")
+    const [accountBank, setAccountBank] = useState("은행 선택")
+    const [searchAccount, setSearchAccount] = useState([])
     const {state} = useLocation();
+
+    useEffect(()=>{
+        getAccountNumber(state.fintech_use_num)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
 
     const setBankIcon = (name) => {
         let url = ""
@@ -36,9 +42,9 @@ const SendPage = () => {
             url = "https://lh3.googleusercontent.com/8PydoWI_sr5TI5zC2hl6H13-iRpad3wvX2zAEoEzzboOZBWkAd-YwmCiCCfzF3816A"
         return url
     }
-    const inputAccountNum=(e)=>{
+    const inputAccountNum = (e) => {
         const {value} = e.target;
-        setAccountNum(value);
+        setToAccountNum(value);
         if (value.length > 10) {
             const httpRequest = {
                 method: "GET",
@@ -54,39 +60,56 @@ const SendPage = () => {
                 })
         }
     }
+// 1065919
+    const getAccountNumber = (finNum) => {
+        const httpRequest = {
+            method: "GET",
+            url: `${process.env.REACT_APP_PROXY}/finNum?num=${finNum}`,
+            headers: {
+                Authorization: localStorage.getItem("Authorization")
+            }
+        }
+        axios(httpRequest)
+            .then((res) => {
+                setFromAccountNum(res.data.accountNum)
+            })
+            .catch((err) => {
+                console.log("err", err)
+            })
+    }
 
-    const inputAccountBank=(e)=>{
+    const inputAccountBank = (e) => {
         const {value} = e.target;
         setAccountBank(value);
     }
 
-    const accountClickListener=(e)=>{
-        setAccountNum(e.account_num_masked);
+    const accountClickListener = (e) => {
+        setToAccountNum(e.account_num_masked);
         setAccountBank(e.bank_name);
     }
 
     const depositClickListener = (e) => {
         const fromToAccount = {
-            fromFinNum : state.fintech_use_num,
-            toAccount : e.accountNum,
-            fromBank : state.bank_name,
-            fromAccount : state.account_num_masked,
-            toBank : state.toBank,
-            toUser : e.username
+            fromFinNum: state.fintech_use_num,
+            toAccount: fromAccountNum,
+            fromBank: state.bank_name,
+            fromAccount: state.account_num_masked,
+            toBank: state.toBank,
+            toUser: e.username
         }
 
         console.log(fromToAccount)
-        navigate("/deposit", {state:fromToAccount})
+        navigate("/deposit", {state: fromToAccount})
     }
 
     return (
         <div>
             <Header/>
-            <From>{state.bank_name}{state.account_num_masked}에서</From>
+            <From>{state.bank_name}{fromAccountNum}에서</From>
             <Text>어디로 돈을 보낼까요?</Text>
             <InputAccount>
-                <Input onChange = {inputAccountNum} type="number" placeholder={accountNum}/>
-                <SelectBank onChange = {inputAccountBank} value={accountBank}>
+                <Input onChange={inputAccountNum} type="number" placeholder={toAccountNum}/>
+                <SelectBank onChange={inputAccountBank} value={accountBank}>
                     <option value={"none"}>{accountBank}</option>
                     <option key={"KB국민은행"} value={"KB국민은행"}>KB국민은행</option>
                     <option key={"부산은행"} value={"부산은행"}>부산은행</option>
@@ -97,7 +120,7 @@ const SendPage = () => {
                     <option key={"하나은행"} value={"하나은행"}>하나은행</option>
                 </SelectBank>
             </InputAccount>
-            {searchAccount.length > 0?
+            {searchAccount.length > 0 ?
                 <div>
                     <Text>검색 결과</Text>
                     <AccountBlock>
@@ -112,7 +135,7 @@ const SendPage = () => {
                             </CardBlock>
                         })}
                     </AccountBlock>
-                </div>:<div/>
+                </div> : <div/>
             }
             <Text>내 계좌</Text>
             <AccountBlock>
