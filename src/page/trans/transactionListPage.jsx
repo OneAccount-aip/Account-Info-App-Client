@@ -39,6 +39,10 @@ const TransactionListPage = () => {
         navigate("/send", {state:depositData})
     }
 
+    const qrButtonListener=(e)=>{
+        navigate("/trans/qr", {state:e})
+    }
+
     const time = (str) => {
         const time = str.slice(2, 4)
         const minute = str.slice(4, 6)
@@ -93,14 +97,12 @@ const TransactionListPage = () => {
                 Authorization: localStorage.getItem("Authorization")
             }
         }
-        // console.log(httpRequest)
         axios(httpRequest)
             .then((res)=>{
                 setAccountNumber(res.data.accountNum)
-                // console.log("setAccountNumber", res.data)
             })
             .catch((err)=>{
-                // console.log("err", err)
+                console.log("err", err)
             })
     }
 
@@ -111,7 +113,7 @@ const TransactionListPage = () => {
                 <Account>{state.bank_name} {accountNumber}</Account>
                 <Balance>{toMoney(state.balance)}원</Balance>
                 <ButtonBlock>
-                    <DepositButton>채우기</DepositButton>
+                    <QRButton onClick={()=>qrButtonListener(state.fintech_use_num)}>QR코드</QRButton>
                     <TransButton onClick={depositButtonListener}>보내기</TransButton>
                 </ButtonBlock>
 
@@ -156,14 +158,14 @@ const ButtonBlock = styled.div`
   justify-content: center;
   margin: auto;
 `
-const DepositButton = styled.button`
+const QRButton = styled.button`
   width: 150px;
   height: 40px;
   margin: 5px;
   background-color: #444452;
   border-style: none;
   color: dodgerblue;
-  border-radius: 20%;
+  border-radius: 20px 20px;
 `
 
 const TransButton = styled.button`
@@ -173,7 +175,7 @@ const TransButton = styled.button`
   background-color: dodgerblue;
   border-style: none;
   color: white;
-  border-radius: 20%;
+  border-radius: 20px 20px;
 `
 
 const Root = styled.div`

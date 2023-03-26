@@ -11,8 +11,8 @@ const InfoPage = () => {
             name: "내정보",
             description: "로그인한 유저의 정보 보기",
         }, {
-            name: "송금",
-            description: "내 계좌에서 다른 계좌로 송금",
+            name: "결제",
+            description: "등록된 계좌로부터 결제",
         }, {
             name: "내 자산",
             description: "내 자산 모아모기",
@@ -33,11 +33,7 @@ const InfoPage = () => {
                 navigate("/mypage")
                 break
             case 1:
-                const depositData = {
-                    bank_name: "",
-                    account_num_masked: ""
-                }
-                navigate("/send", {state: depositData})
+                navigate("/purchase")
                 break
             case 2:
                 navigate("/accountInfo")
