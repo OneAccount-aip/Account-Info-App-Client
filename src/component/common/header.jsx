@@ -43,7 +43,6 @@ const Header = () => {
 export default Header;
 
 const Div = styled.div`
-  //background-color: #19173D;
   display: flex;
   flex-direction: row;
   margin: 40px;

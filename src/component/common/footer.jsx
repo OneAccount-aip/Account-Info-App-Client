@@ -12,7 +12,7 @@ const Footer = () => {
             bank_name: "",
             account_num_masked: ""
         }
-        navigate("/send", {state:depositData})
+        navigate("/purchase", {state:depositData})
     }
     const myPageClickListener = () => {
         navigate("/mypage")
@@ -28,7 +28,7 @@ const Footer = () => {
             </ButtonBlock>
             <ButtonBlock onClick = {sendClickListener}>
                 <Img src={"https://e7.pngegg.com/pngimages/785/698/png-clipart-computer-icons-graphics-remittance-money-parkinson-text-trademark.png"}/>
-                <NavButton>송금</NavButton>
+                <NavButton>결제</NavButton>
             </ButtonBlock>
             <ButtonBlock onClick = {myPageClickListener}>
                 <Img src={"https://e7.pngegg.com/pngimages/952/451/png-clipart-poland-computer-icons-curt-manufacturing-llc-information-boso-ale-w-ostrogach-my-account-icon-miscellaneous-company-thumbnail.png"}/>

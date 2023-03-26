@@ -54,7 +54,7 @@ const Text = styled.p`
 `
 
 const Root = styled.div`
-  background-color: #232328;
+  background-color: #262450;
   margin: 15px;
   padding: 15px;
   border-radius: 20px;

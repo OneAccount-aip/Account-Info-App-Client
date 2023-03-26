@@ -6,4 +6,4 @@ registerRoute((req) => req.event.request
         .headers
         .get('accept')
         .includes('text/html') //html 파일들을 캐싱
-    ,new cacheFirst());//네트워크 퍼스트 전략을 쓴다.
+    ,new cacheFirst());//캐시 퍼스트 전략을 쓴다.
