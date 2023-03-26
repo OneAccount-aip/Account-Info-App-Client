@@ -3,7 +3,6 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Signup from "./page/auth/signup";
 import Signin from "./page/auth/signin";
 import TransactionListPage from "./page/trans/transactionListPage";
-import SendPage from "./page/main/sendPage";
 import UserInfoPage from "./page/main/userInfoPage";
 import Index from "./page/main";
 import MyPage from "./page/main/myPage";
@@ -11,6 +10,8 @@ import AuthPage from "./page/user/authPage";
 import TransferPage from "./page/trans/transferPage";
 import InfoPage from "./page/main/infoPage";
 import NotificationPage from "./page/user/notificationPage";
+import PurchasePage from "./page/main/purchasePage";
+import QrcodePage from "./page/transfer/qrcodePage";
 
 function App() {
     return (
@@ -21,7 +22,8 @@ function App() {
                     <Route path="/signin" element={<Signin/>}/>
                     <Route path="/signup" element={<Signup/>}/>
                     <Route path="/trans" element={<TransactionListPage/>}/>
-                    <Route path="/send" element={<SendPage/>}/>
+                    <Route path="/trans/qr" element={<QrcodePage/>}/>
+                    <Route path="/purchase" element={<PurchasePage/>}/>
                     <Route path="/deposit" element={<TransferPage/>}/>
                     <Route path="/accountInfo" element={<UserInfoPage/>}/>
                     <Route path="/authPage" element={<AuthPage/>}/>
@@ -35,7 +37,6 @@ function App() {
 }
 
 const Div = styled.div`
-  //background-color: #19173D;
   min-height: 100vh;
   color: white;
   padding-bottom: 20px;
