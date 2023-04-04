@@ -12,6 +12,7 @@ import InfoPage from "./page/main/infoPage";
 import NotificationPage from "./page/user/notificationPage";
 import PurchasePage from "./page/main/purchasePage";
 import QrcodePage from "./page/transfer/qrcodePage";
+import SendPage from "./page/trans/sendPage";
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                     <Route path="/signin" element={<Signin/>}/>
                     <Route path="/signup" element={<Signup/>}/>
                     <Route path="/trans" element={<TransactionListPage/>}/>
+                    <Route path="/send" element={<SendPage/>}/>
                     <Route path="/trans/qr" element={<QrcodePage/>}/>
                     <Route path="/purchase" element={<PurchasePage/>}/>
                     <Route path="/deposit" element={<TransferPage/>}/>

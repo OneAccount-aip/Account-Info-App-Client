@@ -60,7 +60,7 @@ const SendPage = () => {
                 })
         }
     }
-// 1065919
+
     const getAccountNumber = (finNum) => {
         const httpRequest = {
             method: "GET",
