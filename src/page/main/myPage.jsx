@@ -2,42 +2,28 @@ import Header from "../../component/common/header";
 import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
-import axios from "axios";
 import Footer from "../../component/common/footer";
+import {userInfoApi} from "../../api/user";
 
 const MyPage = () => {
 
     const navigate = useNavigate();
 
-    useEffect(()=>{
+    useEffect(() => {
         checkAuth();
         getUserInfo();
         // eslint-disable-next-line
-    },[])
+    }, [])
 
-    const [user, setUser] = useState({
-    });
+    const [user, setUser] = useState({});
 
     const checkAuth = () => {
         const token = localStorage.getItem("Authorization")
         if (!token) navigate("/signin")
     }
 
-    const getUserInfo=()=>{
-        const httpRequest = {
-            method : "GET",
-            url : `${process.env.REACT_APP_PROXY}/user`,
-            headers : {
-                Authorization: `Bearer ${localStorage.getItem("Authorization")}`
-            }
-        }
-        axios(httpRequest)
-            .then((res)=>{
-                setUser(res.data)
-            })
-            .catch((err)=>{
-                console.log(err)
-            })
+    const getUserInfo = () => {
+        userInfoApi(setUser);
     }
 
     const logoutClickListener = () => {
@@ -46,8 +32,8 @@ const MyPage = () => {
         navigate("/")
     }
 
-    const value = (v)=>{
-        return v?v.toString():v
+    const value = (v) => {
+        return v ? v.toString() : v
     }
     return (
         <Div>

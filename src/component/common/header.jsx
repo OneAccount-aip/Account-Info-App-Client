@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
 import Welcome from "../account/welcome";
-import axios from "axios";
 import {useEffect, useState} from "react";
+import {userInfoApi} from "../../api/user";
 
 const Header = () => {
 
@@ -17,20 +17,7 @@ const Header = () => {
     const [user, setUser] = useState({name: ""})
 
     const getUserInfo = () => {
-        const httpRequest = {
-            method: "GET",
-            url: `${process.env.REACT_APP_PROXY}/user`,
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("Authorization")}`
-            }
-        }
-        axios(httpRequest)
-            .then((res) => {
-                setUser(res.data)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+        userInfoApi(setUser);
     }
     return (
         <Div>

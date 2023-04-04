@@ -2,14 +2,13 @@ import styled from "styled-components";
 import Header from "../../component/common/header";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
-import axios from "axios";
 import Footer from "../../component/common/footer";
+import {getAccountNumByFinNumApi, transactionListApi} from "../../api/account";
 
 const TransactionListPage = () => {
 
     useEffect(() => {
         getTransactionList()
-        getDbTransactionList()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
@@ -56,54 +55,11 @@ const TransactionListPage = () => {
     }
 
     const getTransactionList = () => {
-        const httpRequest = {
-            method: "GET",
-            url: `${process.env.REACT_APP_PROXY}/transaction/account/transaction_list?fintech_use_num=${state.fintech_use_num}&from_date=20230101&to_date=20230301`,
-            headers: {
-                Authorization: localStorage.getItem("Authorization")
-            }
-        }
-        // console.log(httpRequest)
-        axios(httpRequest)
-            .then((res) => {
-                setTransactionList(res.data.res_list)
-                getAccountNumber(res.data.fintech_use_num)
-                console.log(res.data.res_list)
-            })
-    }
-
-    const getDbTransactionList = () => {
-        const httpRequest = {
-            method: "GET",
-            url: `${process.env.REACT_APP_PROXY}/transaction/user?num=${state.fintech_use_num}`,
-            headers: {
-                Authorization: localStorage.getItem("Authorization")
-            }
-        }
-            axios(httpRequest)
-            .then((res)=>{
-                console.log(res.data)
-            })
-            .catch((err)=>{
-                console.log(err)
-            })
+        transactionListApi(state, setTransactionList, getAccountNumber);
     }
 
     const getAccountNumber = (finNum) => {
-        const httpRequest = {
-            method: "GET",
-            url: `${process.env.REACT_APP_PROXY}/finNum?num=${finNum}`,
-            headers: {
-                Authorization: localStorage.getItem("Authorization")
-            }
-        }
-        axios(httpRequest)
-            .then((res)=>{
-                setAccountNumber(res.data.accountNum)
-            })
-            .catch((err)=>{
-                console.log("err", err)
-            })
+        getAccountNumByFinNumApi(finNum, setAccountNumber);
     }
 
     return (
