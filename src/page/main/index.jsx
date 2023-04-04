@@ -2,14 +2,14 @@ import Header from "../../component/common/header";
 import styled from "styled-components";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useEffect} from "react";
-import axios from "axios";
+import {certificateCheckApi} from "../../api/user";
 
 const Index = () => {
 
     useEffect(() => {
         checkAuth();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+    }, [])
 
     const location = useLocation()
     const navigate = useNavigate();
@@ -23,22 +23,7 @@ const Index = () => {
     }
 
     const checkCertified = () => {
-
-            const httpRequest = {
-                method: "GET",
-                url: `${process.env.REACT_APP_PROXY}/check`,
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("Authorization")}`
-                }
-            }
-            axios(httpRequest)
-                .then((res) => {
-                    if (res.data === true)
-                        navigate("/accountInfo")
-                    else
-                        navigate(`/authPage${location.search}`)
-                })
-
+        certificateCheckApi(navigate, location);
     }
 
     return (

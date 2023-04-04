@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import Footer from "../../component/common/footer";
-import axios from "axios";
+import {transferApi} from "../../api/account";
 
 const TransferPage = () => {
 
@@ -28,26 +28,8 @@ const TransferPage = () => {
             window.alert("보내는 은행 선택")
         } else if (amount <= 0) {
             window.alert("금액을 입력해 주세요")
-        }else {
-            const httpRequest = {
-                method : "POST",
-                url : `${process.env.REACT_APP_PROXY}/transaction/transfer`,
-                data : {
-                    fromFinNum : state.fromFinNum,
-                    toAccount :state.toAccount,
-                    amount :amount,
-                    content : "앱송금"
-                }
-            }
-            axios(httpRequest)
-                .then((res)=>{
-                    console.log(res)
-                    window.alert(`${state.fromBank} 계좌로 ${amount}원을 송금했습니다`)
-                    navigate("/accountInfo")
-                })
-                .catch((err)=>{
-                    console.log(err)
-                })
+        } else {
+            transferApi(state.fromFinNum, state.toAccount, state.fromBank, amount, navigate);
         }
     }
 

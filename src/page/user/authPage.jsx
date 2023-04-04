@@ -3,7 +3,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import styled from "styled-components";
 import {useEffect, useState} from "react";
 import queryString from "query-string";
-import axios from "axios";
+import {store2LeggedTokenApi, store3LeggedTokenApi, storeUserAuthApi} from "../../api/user";
 
 const AuthPage = () => {
 
@@ -22,7 +22,7 @@ const AuthPage = () => {
     useEffect(() => {
         checkIsRedirected()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+    }, [])
 
     const checkIsRedirected = () => {
         if (location.search[0] === '?') {
@@ -33,61 +33,15 @@ const AuthPage = () => {
     }
 
     const get3LeggedToken = () => {
-        const httpRequest = {
-            method: "POST",
-            url: `${process.env.REACT_APP_PROXY}/auth/callback?code=${authCode}`,
-        }
-        axios(httpRequest)
-            .then((res) => {
-                setCntrToken(res.data.access_token)
-                setRefreshToken(res.data.refresh_token)
-                setUserSeqNo((res.data.user_seq_no))
-                console.log(res)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+        store3LeggedTokenApi(authCode, setCntrToken, setRefreshToken, setUserSeqNo);
     }
 
     const get2LeggedToken = () => {
-        const httpRequest = {
-            method: "POST",
-            url: `${process.env.REACT_APP_PROXY}/auth/`,
-        }
-        axios(httpRequest)
-            .then((res) => {
-                setDepositToken(prev => res.data?.access_token || prev)
-                setClientUseCode(res.data.client_use_code)
-                console.log(res)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+        store2LeggedTokenApi(setDepositToken, setClientUseCode);
     }
 
     const setInfo = () => {
-        const httpRequest = {
-            method: "POST",
-            url: `${process.env.REACT_APP_PROXY}/auth/token`,
-            headers: {
-                Authorization: localStorage.getItem("Authorization")
-            },
-            data: {
-                cntrToken: cntrToken,
-                refreshToken: refreshToken,
-                depositToken: depositToken,
-                userSeqNo: userSeqNo,
-                clientUseCode: clientUseCode
-            }
-        }
-        console.log(httpRequest)
-        axios(httpRequest)
-            .then((res) => {
-                console.log(res.data.code)
-                navigate("/info")
-            }).catch((err) => {
-            console.log(err)
-        })
+        storeUserAuthApi(cntrToken, refreshToken, depositToken, userSeqNo, clientUseCode, navigate);
     }
 
     const authHandleClick = () => {

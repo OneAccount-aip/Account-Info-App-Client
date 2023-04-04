@@ -1,8 +1,8 @@
 import "./sign.css"
 import Header from "../../component/common/header";
 import {useState} from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import {signupApi} from "../../api/user";
 
 const Signup = () => {
 
@@ -12,22 +12,7 @@ const Signup = () => {
     const[password, setPassword] = useState();
 
     const signupClickListener=()=>{
-        const request = {
-            method : "POST",
-            url : `${process.env.REACT_APP_PROXY}/signup`,
-            data : {
-                username : username,
-                password : password,
-                email : email
-            }
-        }
-        console.log(request)
-        axios(request).then((res)=>{
-            window.alert(res.data.id+" id로 계정 생성")
-            navigate("/signin")
-        }).catch((err)=>{
-            window.alert(err)
-        })
+        signupApi(username, password, email, navigate);
     }
 
     const inputUsername=(e)=>{

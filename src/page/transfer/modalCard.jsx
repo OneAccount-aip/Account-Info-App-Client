@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import {useState} from "react";
-import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {getAccountByFinNumApi, transferApi} from "../../api/account";
+
 
 const ModalCard = ({fromFinNum, bankName, balance, toFinNum}) => {
     const [amount, setAmount] = useState()
@@ -18,34 +19,9 @@ const ModalCard = ({fromFinNum, bankName, balance, toFinNum}) => {
     }
 
     const onClickListener = async () => {
-        const getAccountRequest = {
-            method: "GET",
-            url: `${process.env.REACT_APP_PROXY}/finNum?num=${toFinNum}`,
-        }
-        const result = await axios(getAccountRequest)
-        const toAccount = result.data.accountNum
-        setToAccount(toAccount)
+        const toAccount = await getAccountByFinNumApi(toFinNum, setToAccount);
 
-        const transferRequest = {
-            method: "POST",
-            url: `${process.env.REACT_APP_PROXY}/transaction/transfer`,
-            data: {
-                fromFinNum: fromFinNum,
-                toAccount: toAccount,
-                amount: amount,
-                content: "앱송금"
-            }
-        }
-        console.log(transferRequest)
-        axios(transferRequest)
-            .then((res) => {
-                console.log(res)
-                window.alert(`${bankName} 계좌로 ${amount}원을 송금했습니다`)
-                navigate("/accountInfo")
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+        transferApi(fromFinNum, toAccount, bankName, amount, navigate);
     }
 
     return (

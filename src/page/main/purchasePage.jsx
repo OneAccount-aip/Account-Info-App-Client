@@ -5,7 +5,7 @@ import Modal from "react-modal";
 import {useEffect, useState} from "react";
 import styled from "styled-components";
 import ModalWithDraw from "../transfer/modalWithDraw";
-import axios from "axios";
+import {accountBalanceApi, userAccountApi} from "../../api/account";
 
 const PurchasePage = () => {
 
@@ -26,33 +26,13 @@ const PurchasePage = () => {
     const [userInfoAccount, setUserInfo] = useState([]);
 
     const getUserInfo = async () => {
-        const httpRequest = {
-            method: "GET",
-            url: `${process.env.REACT_APP_PROXY}/user/me`,
-            headers: {
-                Authorization: localStorage.getItem("Authorization")
-            }
-        }
-        const result = await axios(httpRequest)
-        const accounts = result.data.res_list
-        console.log(accounts)
-        const newAccounts = accounts.map(async (each) => {
-            return {...each, balance: await getAccountBalance(each.fintech_use_num)}
-        })
+        const newAccounts = await userAccountApi(getAccountBalance);
         const a = await Promise.all(newAccounts
         )
         setUserInfo(a)
     }
     const getAccountBalance = async (fintechUseNum) => {
-        const httpRequest = {
-            method: "GET",
-            url: `${process.env.REACT_APP_PROXY}/transaction/account?fintech_use_num=${fintechUseNum}`,
-            headers: {
-                Authorization: localStorage.getItem("Authorization")
-            }
-        }
-        const result = await axios(httpRequest)
-        return result.data.balance_amt
+        return await accountBalanceApi(fintechUseNum);
     }
 
     const CustomStyles = {
