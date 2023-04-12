@@ -4,7 +4,8 @@ const CACHE_NAME = 'my-site-cache-v1';
 const urlsToCache = [
     '/',
     '/styles/main.css',
-    '/scripts/main.js'
+    '/scripts/main.js',
+    '/service-worker.js'
 ];
 
 self.addEventListener('install', function(event) {
