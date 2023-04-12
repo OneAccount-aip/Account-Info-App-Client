@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 const Welcome = ({username}) => {
     const navigate = useNavigate()
     const logoClickListener = () => {
-        navigate("/")
+        navigate("/accountInfo")
     }
 
     return (
