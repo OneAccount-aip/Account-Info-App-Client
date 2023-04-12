@@ -65,7 +65,6 @@ export async function searchAccountNumApi(value, setSearchAccount) {
 }
 
 export async function getAccountNumByFinNumApi(finNum, setFromAccountNum) {
-    console.log("getAccountNumByFinNumApi")
     const cacheName = `account-num-cache-${finNum}`;
     const httpRequest = {
         method: "GET",
