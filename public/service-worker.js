@@ -1,5 +1,3 @@
-import axios from "axios";
-
 const CACHE_NAME = 'my-site-cache-v1';
 const urlsToCache = [
     '/',
@@ -7,6 +5,16 @@ const urlsToCache = [
     '/scripts/main.js',
     '/service-worker.js'
 ];
+
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js')
+        .then(function(registration) {
+            console.log('Service Worker registered successfully');
+        })
+        .catch(function(error) {
+            console.log('Service Worker registration failed:', error);
+        });
+}
 
 self.addEventListener('install', function(event) {
     // 캐시 생성 및 파일 저장
@@ -34,9 +42,16 @@ self.addEventListener('activate', function(event) {
     );
 });
 self.addEventListener('fetch', function(event) {
+    console.log('Fetch event:', event);
     event.respondWith(
-        caches.match(event.request).then(function(response) {
-            return response || fetch(event.request.url);
-        })
+        fetch(event.request)
+            .then(function(response) {
+                console.log('Fetch response:', response);
+                return response;
+            })
+            .catch(function(error) {
+                console.log('Fetch error:', error);
+                throw error;
+            })
     );
 });
