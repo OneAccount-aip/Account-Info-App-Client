@@ -1,27 +1,20 @@
 import axios from "axios";
 
-export async function userInfoApi(setUser) {
-    const cacheName = "user-info-cache";
+export function userInfoApi(setUser) {
     const httpRequest = {
         method: "GET",
         url: `${process.env.REACT_APP_PROXY}/user`,
         headers: {
-            Authorization: `Bearer ${localStorage.getItem("Authorization")}`,
-        },
-    };
-    const cache = await caches.open(cacheName);
-    const cacheResponse = await cache.match(httpRequest);
-    if (cacheResponse) {
-        const cacheData = await cacheResponse.json();
-        setUser(cacheData.data);
+            Authorization: `Bearer ${localStorage.getItem("Authorization")}`
+        }
     }
-    const result = await axios(httpRequest);
-    const serverResponse = JSON.stringify(result);
-    await cache.put(httpRequest, new Response(serverResponse));
-
-    if (!cacheResponse || serverResponse !== cacheResponse) {
-        setUser(result.data);
-    }
+    axios(httpRequest)
+        .then((res) => {
+            setUser(res.data)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 }
 
 export function signupApi(username, password, email, navigate) {
