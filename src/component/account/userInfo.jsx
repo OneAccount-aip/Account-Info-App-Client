@@ -13,8 +13,7 @@ const UserInfo = ({accountClickListener, depositClickListener}) => {
     const [userInfo, setUserInfo] = useState([]);
 
     const getUserInfo = async () => {
-        const a = await accountListApi(getAccountBalance);
-        setUserInfo(a)
+        await accountListApi(getAccountBalance, setUserInfo)
     }
 
     const getAccountBalance = async (fintechUseNum) => {
@@ -28,7 +27,7 @@ const UserInfo = ({accountClickListener, depositClickListener}) => {
     }
 
     return (
-        <div>{userInfo.map((i, index) => {
+        <div>{userInfo?userInfo.map((i, index) => {
                 return (
                     <CardBlock key={index}>
                         <Image src={setBankIcon(i.bank_name)}/>
@@ -40,7 +39,7 @@ const UserInfo = ({accountClickListener, depositClickListener}) => {
                     </CardBlock>
                 )
             }
-        )}</div>
+        ):[]}</div>
     )
 }
 export default UserInfo;

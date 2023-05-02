@@ -1,46 +1,20 @@
 import axios from "axios";
 
-export async function accountListApi(getAccountBalance) {
-    const cacheName = 'account-list-cache';
+export async function accountListApi(getAccountBalance, setUserInfo) {
+    // const cacheName = 'account-list-cache';
     const httpRequest = {
-        method: 'GET',
+        method: "GET",
         url: `${process.env.REACT_APP_PROXY}/user/me`,
         headers: {
-            Authorization: localStorage.getItem('Authorization'),
-        },
-    };
-
-    let data = '';
-    let cacheResponse = await caches.match(httpRequest);
-    if (cacheResponse) {
-        const cachedData = await cacheResponse.json();
-        try {
-            const result = axios(httpRequest);
-            const accounts = result.data.res_list;
-            const newAccounts = accounts.map(async (each) => {
-                return {...each, balance: await getAccountBalance(each.fintech_use_num)};
-            });
-            data = Promise.all(newAccounts);
-            const cache = caches.open(cacheName);
-            await cache.put(httpRequest, new Response(JSON.stringify(data)));
-        } catch (error) {
-            return cachedData;
-        }
-    } else {
-        try {
-            const result = await axios(httpRequest);
-            const accounts = result.data.res_list;
-            const newAccounts = accounts.map(async (each) => {
-                return {...each, balance: await getAccountBalance(each.fintech_use_num)};
-            });
-            data = await Promise.all(newAccounts);
-            const cache = await caches.open(cacheName);
-            await cache.put(httpRequest, new Response(JSON.stringify(data)));
-        } catch (error) {
-            throw new Error('Failed to fetch account list');
+            Authorization: localStorage.getItem("Authorization")
         }
     }
-    return data;
+    const result = await axios(httpRequest)
+    const accounts = result.data.res_list
+    const newAccounts = accounts.map(async (each) => {
+        return {...each, balance: await getAccountBalance(each.fintech_use_num)}
+    })
+    setUserInfo(await Promise.all(newAccounts))
 }
 
 
