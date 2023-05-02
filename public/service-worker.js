@@ -42,11 +42,11 @@ self.addEventListener('activate', function(event) {
     );
 });
 self.addEventListener('fetch', function(event) {
-    console.log('Fetch event:', event);
+    // console.log('Fetch event:', event);
     event.respondWith(
         fetch(event.request)
             .then(function(response) {
-                console.log('Fetch response:', response);
+                // console.log('Fetch response:', response);
                 return response;
             })
             .catch(function(error) {
