@@ -33,7 +33,7 @@ jobs:
                 - name: REACT_APP_CLIENTID
                   value: 2d720bca-aaea-46b6-9943-274bb39a5f8a
                 - name: REACT_APP_REDIRECT_URI
-                  value: https://web-account-info-app-client-6g2llf5d1j9b.sel3.cloudtype.app
+                  value: https://oneaccount.kro.kr
                 - name: REACT_APP_SCOPE
                   value: login inquiry transfer
                 - name: REACT_APP_STATE
@@ -43,7 +43,7 @@ jobs:
                 - name: REACT_APP_TEST_API_URL
                   value: https://testapi.openbanking.or.kr/oauth/2.0/authorize
                 - name: REACT_APP_PROXY
-                  value: https://port-0-account-info-app-server-6g2llf5d1j9b.sel3.cloudtype.app
+                  value: https://backend-oneaccount.kro.kr
               install: npm install --force
             context:
               git:
