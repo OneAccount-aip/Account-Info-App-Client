@@ -4,11 +4,13 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import Footer from "../../component/common/footer";
 import {transferApi} from "../../api/account";
+import Keypad from "../../component/common/keypad";
 
 const TransferPage = () => {
 
     const {state} = useLocation();
     const [amount, setAmount] = useState("금액을 입력해 주세요")
+    const [password, setPassword] = useState("")
     const navigate = useNavigate()
     const inputAmount = (e) => {
         const {value} = e.target;
@@ -33,6 +35,14 @@ const TransferPage = () => {
         }
     }
 
+    const passwordMasking=()=>{
+        let str = ""
+        for (let i = 0; i < password.length; i++) {
+            str+="*"
+        }
+        return str
+    }
+
     console.log(state, amount)
     return (
         <div>
@@ -45,7 +55,13 @@ const TransferPage = () => {
             </InputAccount>
 
             <Text>원을 보냅니다</Text>
-            <SendButton onClick={depositClickListener}>다음</SendButton>
+            {password.length>3?
+                <SendButton onClick={depositClickListener}>다음</SendButton>
+                :<div>
+                    <Keypad onChange={setPassword} value={password}/>
+                    <InputPasswordText>2차 인증 비밀번호</InputPasswordText>
+                    <Password>{passwordMasking()}</Password>
+                </div>}
             <Footer/>
         </div>
     )
@@ -93,4 +109,17 @@ const SendButton = styled.button`
   font-size: 0.8rem;
   color: white;
   border: none;
+`
+
+const Password = styled.p`
+  border-bottom: 1px solid;
+  align-items: center;
+  text-align: center;
+  margin: 20px;
+`
+
+const InputPasswordText = styled.p`
+  margin-top: 50px;
+  align-items: center;
+  text-align: center;
 `
