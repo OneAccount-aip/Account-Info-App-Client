@@ -31,6 +31,11 @@ const SendPage = message => {
         setAccountBank(value);
     }
 
+    const inputAccountNum = (e) => {
+        const {value} = e.target;
+        setToAccountNum(value)
+    }
+
     const accountClickListener = (e) => {
         setToAccountNum(e.account_num_masked);
         setAccountBank(e.bank_name);
@@ -61,7 +66,7 @@ const SendPage = message => {
             <From>{state.bank_name}{fromAccountNum}에서</From>
             <Text>어디로 돈을 보낼까요?</Text>
             <InputAccount>
-                <Input type="number" placeholder={toAccountNum}/>
+                <Input type="number" onChange={inputAccountNum} placeholder={toAccountNum}/>
                 <Keypad onChange={setToAccountNum} value={toAccountNum}/>
                 <SelectBank onChange={inputAccountBank} value={accountBank}>
                     <option value={"none"}>{accountBank}</option>
@@ -75,24 +80,6 @@ const SendPage = message => {
                 </SelectBank>
                 <SendButton onClick={sendButtonListener}>송금</SendButton>
             </InputAccount>
-            {/*{searchAccount.length > 0 ?*/}
-            {/*    <div>*/}
-            {/*        <Text>검색 결과</Text>*/}
-            {/*        <AccountBlock>*/}
-            {/*            {searchAccount.map((v) => {*/}
-            {/*                console.log(v)*/}
-            {/*                return <CardBlock>*/}
-            {/*                    <Image src={setBankIcon(v.bankCode)}></Image>*/}
-            {/*                    <Card>*/}
-            {/*                        <Username>{v.username}</Username>*/}
-            {/*                        <AccountNum>{v.accountNum}</AccountNum>*/}
-            {/*                    </Card>*/}
-            {/*                    <DepositButton onClick={() => depositClickListener(v)}>송금</DepositButton>*/}
-            {/*                </CardBlock>*/}
-            {/*            })}*/}
-            {/*        </AccountBlock>*/}
-            {/*    </div> : <div/>*/}
-            {/*}*/}
             <Text>내 계좌</Text>
             <AccountBlock>
                 <UserInfo accountClickListener={accountClickListener} depositClickListener={depositClickListener}/>
@@ -164,48 +151,3 @@ const Input = styled.input`
   color: white;
   font-size: 1.3rem;
 `
-
-// const CardBlock = styled.div`
-//   display: flex;
-//   height: 70px;
-//   flex-direction: row;
-//   margin-top: 20px;
-//   border-radius: 30px;
-//   background-color: #19173D;
-// `
-
-// const Card = styled.div`
-//   padding-left: 20px;
-//   display: flex;
-//   flex-direction: column;
-// `
-//
-// const Image = styled.img`
-//   margin-left: 20px;
-//   margin-top: 13px;
-//   border-radius: 70%;
-//   width: 40px;
-//   height: 40px;
-// `
-//
-// const AccountNum = styled.p`
-//   font-size: 0.8rem;
-//   font-weight: bold;
-// `
-//
-// const Username = styled.p`
-//   margin-top: 15px;
-//   font-size: 1rem;
-// `
-//
-// const DepositButton = styled.button`
-//   min-width: 50px;
-//   height: 35px;
-//   background-color: #19173D;
-//   color: white;
-//   border: 1px solid #262450;
-//   border-radius: 20px;
-//   margin-top: 15px;
-//   margin-left: auto;
-//   margin-right: 10px;
-// `
