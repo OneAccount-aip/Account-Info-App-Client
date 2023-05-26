@@ -33,6 +33,7 @@ const TransferPage = () => {
         } else {
             transferApi(state.fromFinNum, state.toAccount, state.fromBank, amount, navigate);
         }
+        console.log(state)
     }
 
     const passwordMasking=()=>{
@@ -48,7 +49,7 @@ const TransferPage = () => {
         <div>
             <Header/>
             <From>{state.fromBank} {state.fromAccount}에서</From>
-            <Text>{state.toUser}님의 계좌 {state.toAccount}로</Text>
+            <Text>최성원님의 계좌 {state.toAccount}로</Text>
             <InputAccount>
                 <Input onChange={inputAmount} type="number" placeholder={amount}/>
                 <Amount>{toMoney(amount)}</Amount>
